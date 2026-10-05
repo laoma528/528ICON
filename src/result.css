@@ -1,14 +1,14 @@
 .result {
-  background: var(--header-bg);
-  border-radius: 12px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--rounded-sm);
   overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.2s;
-  box-shadow: 0 1px 3px var(--shadow-color);
+  transition: border-color 0.15s ease-out, background-color 0.15s ease-out;
 }
 
 .result:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 12px var(--shadow-color);
+  border-color: var(--border-hover);
+  background-color: var(--filter-bg);
 }
 
 .icon-wrapper {
@@ -29,35 +29,40 @@
 }
 
 .info {
-  padding: 1rem;
+  padding: 1.25rem;
 }
 
 .icon-trackName {
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 400;
   margin-bottom: 0.5rem;
   color: var(--text-color);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  letter-spacing: -0.01em;
 }
 
 .icon-artistName {
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   color: var(--text-secondary);
   margin-bottom: 0.5rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-weight: 400;
 }
 
 .icon-platform {
   display: inline-block;
   font-size: 0.75rem;
   color: var(--text-secondary);
-  background: var(--filter-bg);
-  padding: 4px 8px;
-  border-radius: 4px;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
 }
 
 a.result {

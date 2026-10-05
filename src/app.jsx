@@ -12,9 +12,9 @@ const isAndroid = /android/i.test(navigator.userAgent);
 
 const TRANSLATIONS = {
   zh: {
-    title: "HQ ICON",
-    description: "从App Store获取高清应用图标",
-    searchPlaceholder: "应用名称、App Store 链接或 ID",
+    title: "528图标LOGO下载",
+    description: "获取高清PNG应用图标logo",
+    searchPlaceholder: "输入应用名称、App Store链接或 ID",
     filterToggle: "筛选条件",
     queryType: "查询类型",
     queryCount: "查询数量",
@@ -29,14 +29,14 @@ const TRANSLATIONS = {
     themeLight: "浅色",
     themeDark: "深色",
     themeSystem: "系统",
-    noResults: "无查询结果",
-    proxyWarning: "可尝试切换国家/地区，或检查网络及代理设置",
+    noResults: "🔍 未找到相关应用",
+    proxyWarning: "提示：可尝试切换国家/地区，或检查网络及代理设置",
     androidWarning: "检测到当前是Android设备，可使用",
     androidAppLink: "App版本",
   },
   en: {
-    title: "HQ ICON",
-    description: "High-quality App Store icon downloader",
+    title: "528 Icon Helper",
+    description: "Get high-quality PNG app icons and logos",
     searchPlaceholder: "App name, App Store link or ID",
     filterToggle: "Filter Options",
     queryType: "Platform",
@@ -52,8 +52,8 @@ const TRANSLATIONS = {
     themeLight: "Light",
     themeDark: "Dark",
     themeSystem: "Auto",
-    noResults: "No results",
-    proxyWarning: "Try another region or check your network and proxy settings",
+    noResults: "🔍 No results found",
+    proxyWarning: "Tip: Try another region or check your network and proxy settings",
     androidWarning: "Android device detected. You can use the",
     androidAppLink: "App version",
   },
@@ -65,30 +65,30 @@ const ENTITY_MAPS = [
   { key: "entity", value: "desktopSoftware", text: "macOS" },
 ];
 const COUNTRY_MAPS = [
-  { key: "country", value: "cn", text: "CN" },
-  { key: "country", value: "us", text: "US" },
-  { key: "country", value: "jp", text: "JP" },
-  { key: "country", value: "kr", text: "KR" },
-  { key: "country", value: "tw", text: "TW" },
-  { key: "country", value: "hk", text: "HK" },
-  { key: "country", value: "sg", text: "SG" },
-  { key: "country", value: "gb", text: "GB" },
-  { key: "country", value: "fr", text: "FR" },
-  { key: "country", value: "de", text: "DE" },
-  { key: "country", value: "it", text: "IT" },
-  { key: "country", value: "es", text: "ES" },
-  { key: "country", value: "ru", text: "RU" },
-  { key: "country", value: "in", text: "IN" },
-  { key: "country", value: "th", text: "TH" },
-  { key: "country", value: "id", text: "ID" },
-  { key: "country", value: "ph", text: "PH" },
-  { key: "country", value: "vn", text: "VN" },
-  { key: "country", value: "tr", text: "TR" },
-  { key: "country", value: "ca", text: "CA" },
-  { key: "country", value: "au", text: "AU" },
-  { key: "country", value: "br", text: "BR" },
-  { key: "country", value: "mx", text: "MX" },
-  { key: "country", value: "my", text: "MY" },
+  { key: "country", value: "cn", text: "中国" },
+  { key: "country", value: "us", text: "美国" },
+  { key: "country", value: "jp", text: "日本" },
+  { key: "country", value: "kr", text: "韩国" },
+  { key: "country", value: "tw", text: "台湾" },
+  { key: "country", value: "hk", text: "香港" },
+  { key: "country", value: "sg", text: "新加坡" },
+  { key: "country", value: "gb", text: "英国" },
+  { key: "country", value: "fr", text: "法国" },
+  { key: "country", value: "de", text: "德国" },
+  { key: "country", value: "it", text: "意大利" },
+  { key: "country", value: "es", text: "西班牙" },
+  { key: "country", value: "ru", text: "俄罗斯" },
+  { key: "country", value: "in", text: "印度" },
+  { key: "country", value: "th", text: "泰国" },
+  { key: "country", value: "id", text: "印尼" },
+  { key: "country", value: "ph", text: "菲律宾" },
+  { key: "country", value: "vn", text: "越南" },
+  { key: "country", value: "tr", text: "土耳其" },
+  { key: "country", value: "ca", text: "加拿大" },
+  { key: "country", value: "au", text: "澳洲" },
+  { key: "country", value: "br", text: "巴西" },
+  { key: "country", value: "mx", text: "墨西哥" },
+  { key: "country", value: "my", text: "马来西亚" },
 ];
 const FORMAT_MAPS = [
   { key: "format", value: "jpeg", text: "JPEG" },
@@ -166,6 +166,9 @@ class App extends Component {
       this.handleSystemThemeChange,
     );
 
+    // 点击外部关闭筛选框
+    document.addEventListener("click", this.handleClickOutside);
+
     if (this.state.name) {
       this.search();
     }
@@ -176,9 +179,17 @@ class App extends Component {
       "change",
       this.handleSystemThemeChange,
     );
+    document.removeEventListener("click", this.handleClickOutside);
     document.removeEventListener("mousemove", this.handleDocumentMouseMove);
     document.removeEventListener("mouseup", this.handleDocumentMouseUp);
   }
+
+  handleClickOutside = (event) => {
+    const filtersContainer = event.target.closest('.filters-container');
+    if (!filtersContainer && this.state.isFiltersVisible) {
+      this.setState({ isFiltersVisible: false });
+    }
+  };
 
   applyTheme = (theme) => {
     if (theme === "system") {
@@ -344,67 +355,18 @@ class App extends Component {
                 <div className="description">{t.description}</div>
               </div>
               <div className="header-right">
-                <div
-                  className={`header-controls ${isControlsVisible ? "show" : ""}`}
-                >
-                  <div className="lang-toggle">
-                    <span
-                      className="toggle-slider"
-                      style={{
-                        "--active-index":
-                          language === "zh" ? 0 : language === "system" ? 1 : 2,
-                      }}
-                    />
-                    <button
-                      className={`theme-btn ${language === "zh" ? "active" : ""}`}
-                      onClick={() => this.toggleLanguage("zh")}
-                    >
-                      中文
-                    </button>
-                    <button
-                      className={`theme-btn ${language === "system" ? "active" : ""}`}
-                      onClick={() => this.toggleLanguage("system")}
-                    >
-                      {t.themeSystem}
-                    </button>
-                    <button
-                      className={`theme-btn ${language === "en" ? "active" : ""}`}
-                      onClick={() => this.toggleLanguage("en")}
-                    >
-                      EN
-                    </button>
-                  </div>
-                  <div className="theme-toggle">
-                    <span
-                      className="toggle-slider"
-                      style={{
-                        "--active-index":
-                          theme === "light" ? 0 : theme === "system" ? 1 : 2,
-                      }}
-                    />
-                    <button
-                      className={`theme-btn ${theme === "light" ? "active" : ""}`}
-                      onClick={() => this.toggleTheme("light")}
-                    >
-                      {t.themeLight}
-                    </button>
-                    <button
-                      className={`theme-btn ${theme === "system" ? "active" : ""}`}
-                      onClick={() => this.toggleTheme("system")}
-                    >
-                      {t.themeSystem}
-                    </button>
-                    <button
-                      className={`theme-btn ${theme === "dark" ? "active" : ""}`}
-                      onClick={() => this.toggleTheme("dark")}
-                    >
-                      {t.themeDark}
-                    </button>
-                  </div>
+                <div className="header-controls">
                   <button
-                    className={`expand-controls ${isControlsVisible ? "active" : ""}`}
-                    onClick={this.toggleControls}
-                    aria-label="Toggle controls"
+                    className="icon-button lang-icon"
+                    onClick={this.toggleLanguage.bind(this, language === "zh" ? "en" : "zh")}
+                    title={language === "zh" ? "Switch to English" : "切换到中文"}
+                  >
+                    {language === "zh" ? "中" : "EN"}
+                  </button>
+                  <button
+                    className={`icon-button ${theme === "dark" ? "theme-icon-dark" : "theme-icon-light"}`}
+                    onClick={this.toggleTheme.bind(this, theme === "dark" ? "light" : "dark")}
+                    title={theme === "dark" ? "切换到浅色模式" : "切换到深色模式"}
                   />
                 </div>
                 <div className="search">
@@ -424,7 +386,11 @@ class App extends Component {
                       e.key === "Enter" ? this.search() : null
                     }
                   />
-                  <button className="search-button" onClick={this.search}>
+                  <button
+                    className={`search-button ${isSearching ? "loading" : ""}`}
+                    onClick={this.search}
+                    disabled={isSearching}
+                  >
                     <div className="search-icon" />
                   </button>
                 </div>
@@ -535,7 +501,7 @@ class App extends Component {
                 <div className="android-warning">
                   {t.androidWarning}
                   <a
-                    href="https://github.com/YuKongA/HQ-ICON_Compose/releases"
+                    href="https://528.im"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -551,16 +517,8 @@ class App extends Component {
             <div className="footer-content">
               <div className="copyright">
                 Copyright © 2024 - 2026{" "}
-                <a href="https://github.com/YuKongA">YuKongA</a>
+                <a href="https://528.im" target="_blank" rel="noopener noreferrer">528.im</a>
               </div>
-              <a
-                href="https://github.com/YuKongA/HQ-ICON"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="github-link"
-              >
-                GitHub
-              </a>
             </div>
           </div>
         </footer>

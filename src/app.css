@@ -1,26 +1,56 @@
-/* 主题变量 */
+/* xAI-inspired 主题变量 */
 :root {
-  --bg-color: #fafafa;
-
-  --header-bg: #fff;
-  --text-color: #000;
-  --text-secondary: #666;
-  --border-color: #eee;
+  --bg-color: #fafaf7;
+  --header-bg: #ffffff;
+  --text-color: #0a0a0a;
+  --text-secondary: #7d8187;
+  --border-color: #e5e5e5;
+  --border-hover: #999999;
+  --card-bg: #ffffff;
   --filter-bg: #f5f5f5;
-  --filter-hover: #eee;
-  --shadow-color: rgba(0, 0, 0, 0.05);
+  --filter-hover: #e8e8e8;
+  --shadow-color: rgba(0, 0, 0, 0.04);
+  --accent-primary: #ff7a17;
+  --accent-primary-soft: #ffc285;
+  --accent-hover: #e66b12;
+
+  /* xAI 字体系统 */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial,
+                 'Noto Sans', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-weight-normal: 400;
+
+  /* 字号 */
+  --font-size-xs: 0.75rem;      /* 12px */
+  --font-size-sm: 0.875rem;     /* 14px */
+  --font-size-base: 1rem;       /* 16px */
+  --font-size-lg: 1.125rem;     /* 18px */
+  --font-size-xl: 1.5rem;       /* 24px */
+  --font-size-2xl: 2rem;        /* 32px */
+
+  /* 行高 */
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+
+  /* 圆角 - xAI 官方规范 */
+  --rounded-sm: 8px;            /* 卡片圆角 */
+  --rounded-pill: 9999px;       /* 按钮圆角 */
 }
 
 [data-theme="dark"] {
-  --bg-color: #1a1a1a;
-
-  --header-bg: #242424;
-  --text-color: #fff;
-  --text-secondary: #999;
-  --border-color: #333;
-  --filter-bg: #2a2a2a;
-  --filter-hover: #333;
-  --shadow-color: rgba(0, 0, 0, 0.2);
+  --bg-color: #0a0a0a;
+  --header-bg: #0a0a0a;
+  --text-color: #ffffff;
+  --text-secondary: #7d8187;
+  --border-color: #212327;
+  --border-hover: #ffffff;
+  --card-bg: #0f0f0f;
+  --filter-bg: #1a1c20;
+  --filter-hover: #363a3f;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --accent-primary: #ff7a17;
+  --accent-primary-soft: #ffc285;
+  --accent-hover: #ffc285;
 }
 
 /* 布局 */
@@ -40,197 +70,198 @@
 
 /* 头部样式 */
 header {
-  padding: 3rem 3rem 1rem;
+  padding: 1.5rem 2rem 0.75rem;
   background: var(--header-bg);
-  box-shadow: 0 1px 2px var(--shadow-color);
+  border-bottom: 1px solid var(--border-color);
   position: sticky;
   top: 0;
   z-index: 100;
+  backdrop-filter: blur(12px);
 }
 
 .header-content {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
+  gap: 1.5rem;
+  position: relative;
 }
 
 .header-right {
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 1rem;
+  width: 100%;
+  max-width: 600px;
 }
 
 /* 品牌区域 */
 .branding {
-  text-align: left;
+  text-align: center;
 }
 
 .logo {
-  font-size: 1.8rem;
-  font-weight: 800;
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
   color: var(--text-color);
   margin-bottom: 0.5rem;
+  letter-spacing: -0.6px;
+  line-height: var(--line-height-tight);
 }
 
 .description {
   color: var(--text-secondary);
-  font-size: 0.9rem;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  letter-spacing: 0;
+  line-height: var(--line-height-normal);
 }
 
 /* 控制按钮组 */
 .header-controls {
+  position: absolute;
+  top: 0;
+  right: 0;
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.5rem;
 }
 
-/* 主题和语言切换按钮组通用样式 */
-.theme-toggle,
-.lang-toggle {
-  display: flex;
-  padding: 4px;
-  height: 44px;
-  background: var(--filter-bg);
-  border-radius: 8px;
-  width: 180px;
-  box-sizing: border-box;
-  position: relative;
-}
-
-.toggle-slider {
-  position: absolute;
-  top: 4px;
-  left: 4px;
-  width: calc((100% - 8px) / 3);
+/* 图标按钮样式 */
+.icon-button {
+  width: 36px;
   height: 36px;
-  background: var(--text-color);
-  border-radius: 6px;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  transform: translateX(calc(var(--active-index, 0) * 100%));
-  pointer-events: none;
-}
-
-/* 按钮通用样式 */
-.theme-btn {
-  height: 36px;
-  padding: 0;
-  border: none;
-  border-radius: 6px;
+  border: 1px solid var(--border-color);
   background: transparent;
+  border-radius: 9999px;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s ease-out, background-color 0.15s ease-out;
+  position: relative;
   color: var(--text-secondary);
-  cursor: pointer;
-  font-size: 0.85rem;
-  transition: background-color 0.2s, color 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-  min-width: 0;
-  white-space: nowrap;
-  position: relative;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  will-change: border-color, background-color;
 }
 
-.theme-btn:hover {
-  background: var(--filter-hover);
-}
-
-.theme-btn.active {
-  background: transparent;
-  color: var(--header-bg);
-}
-
-.theme-btn.active:hover {
-  background: transparent;
-}
-
-.expand-controls {
-  display: none;
-  width: 44px;
-  height: 44px;
-  border: none;
+.icon-button:hover {
+  border-color: var(--text-color);
   background: var(--filter-bg);
-  border-radius: 8px;
-  cursor: pointer;
-  padding: 0;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  -webkit-tap-highlight-color: transparent;
 }
 
-.expand-controls::before,
-.expand-controls::after {
-  content: '';
-  position: absolute;
-  width: 12px;
-  height: 2px;
-  background: var(--text-color);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+/* 语言图标 */
+.lang-icon {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  letter-spacing: -0.02em;
 }
 
-.expand-controls::before {
-  transform: rotate(90deg);
+/* 主题图标 */
+.theme-icon-light::before {
+  content: '☀';
+  font-size: var(--font-size-lg);
 }
 
-.expand-controls.active::before {
-  transform: rotate(0);
+.theme-icon-dark::before {
+  content: '☾';
+  font-size: var(--font-size-base);
 }
 
 /* 搜索区域 */
 .search {
-  width: 368px;
+  width: 100%;
   position: relative;
   -webkit-tap-highlight-color: transparent;
+  order: -1;
 }
 
 .search-input {
   width: 100%;
-  height: 44px;
-  padding: 0 40px 0 16px;
+  height: 52px;
+  padding: 0 60px 0 24px;
   border: 1px solid var(--border-color);
-  border-radius: 8px;
-  font-size: 0.95rem;
-  transition: border-color 0.2s;
-  background: var(--filter-bg);
+  border-radius: 9999px;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background: var(--header-bg);
   color: var(--text-color);
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.search-input::placeholder {
+  color: var(--text-secondary);
+  font-weight: var(--font-weight-normal);
 }
 
 .search-input::selection {
-  background-color: var(--text-color);
-  color: var(--bg-color);
+  background-color: var(--accent-primary-soft);
+  color: var(--text-color);
 }
 
 .search-input:focus {
-  border-color: var(--text-color);
+  border-color: var(--accent-primary);
   outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 122, 23, 0.1);
 }
 
 .search-button {
   position: absolute;
-  right: 4px;
+  right: 6px;
   top: 50%;
   transform: translateY(-50%);
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border: none;
-  background: var(--text-color);
-  border-radius: 6px;
+  background: var(--accent-primary);
+  border-radius: 9999px;
   cursor: pointer;
   padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, transform 0.1s;
 }
 
 .search-button:hover {
-  background: var(--text-secondary);
+  background: var(--accent-hover);
+}
+
+.search-button:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.search-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.search-button.loading .search-icon {
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .search-icon {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   background-color: var(--bg-color);
   mask: url(/search.svg) center/contain no-repeat;
   -webkit-mask: url(/search.svg) center/contain no-repeat;
@@ -239,21 +270,24 @@ header {
 /* 筛选器区域 */
 .filters-container {
   position: relative;
+  margin-bottom: 0;
 }
 
 .filters-toggle {
   display: flex;
   width: 100%;
-  padding: 0.8rem 1rem;
-  background: var(--filter-bg);
-  border: none;
-  border-radius: 8px;
-  font-size: 0.9rem;
+  padding: 0 20px;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: 9999px;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
   color: var(--text-secondary);
   cursor: pointer;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
   text-align: left;
-  transition: background-color 0.2s;
+  transition: border-color 0.2s, color 0.2s;
   position: relative;
   align-items: center;
   -webkit-tap-highlight-color: transparent;
@@ -261,20 +295,25 @@ header {
 }
 
 .filters-toggle:hover {
-  background: var(--filter-hover);
+  border-color: var(--border-hover);
+  color: var(--text-color);
 }
 
 .filters-toggle::after {
   content: '';
   position: absolute;
-  right: 1rem;
+  right: 20px;
   top: 50%;
   width: 8px;
   height: 8px;
-  border-right: 2px solid var(--text-secondary);
-  border-bottom: 2px solid var(--text-secondary);
+  border-right: 1.5px solid var(--text-secondary);
+  border-bottom: 1.5px solid var(--text-secondary);
   transform: translateY(-50%) rotate(45deg);
-  transition: transform 0.2s;
+  transition: transform 0.3s, border-color 0.2s;
+}
+
+.filters-toggle:hover::after {
+  border-color: var(--border-hover);
 }
 
 .filters-toggle.active::after {
@@ -284,9 +323,10 @@ header {
 .filters {
   display: grid;
   grid-template-rows: 0fr;
-  padding: 0 15px;
+  padding: 0 20px;
   background: var(--filter-bg);
-  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--rounded-sm);
   margin-top: 10px;
   opacity: 0;
   transition: grid-template-rows 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s, padding 0.3s;
@@ -298,18 +338,18 @@ header {
 
 .filters.show {
   grid-template-rows: 1fr;
-  padding: 15px;
+  padding: 24px 20px;
   opacity: 1;
 }
 
 /* 筛选组样式 */
 .filter-group {
   display: flex;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   font-weight: 400;
   align-items: center;
-  margin-bottom: 12px;
-  padding-bottom: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
   border-bottom: 1px solid var(--border-color);
 }
 
@@ -320,17 +360,19 @@ header {
 }
 
 .filter-group-title {
-  min-width: 80px;
-  width: 80px;
+  min-width: 90px;
+  width: 90px;
   flex-shrink: 0;
   color: var(--text-secondary);
-  margin-right: 10px;
+  margin-right: 16px;
+  font-weight: 400;
+  letter-spacing: 0.05em;
 }
 
 .filter-options {
   display: flex;
   flex-wrap: nowrap;
-  gap: 10px;
+  gap: 8px;
   flex: 1;
   overflow-x: auto;
   scrollbar-width: none;
@@ -352,30 +394,44 @@ header {
 }
 
 .filter-group label {
-  font-size: 0.85rem;
-  padding: 6px 10px;
-  border-radius: 6px;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+  padding: 8px 16px;
+  border-radius: 9999px;
   cursor: pointer;
   user-select: none;
   color: var(--text-secondary);
-  background: var(--filter-bg);
-  transition: background-color 0.2s, color 0.2s;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  transition: border-color 0.15s ease-out, color 0.15s ease-out, background-color 0.15s ease-out;
   white-space: nowrap;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  will-change: border-color, color, background-color;
 }
 
 .filter-group label:hover {
-  background: var(--filter-hover);
+  border-color: var(--border-hover);
+  color: var(--text-color);
 }
 
 .filter-group input[type="checkbox"]:checked+label {
   background: var(--text-color);
   color: var(--bg-color);
+  border-color: var(--text-color);
 }
 
 .filter-group input[type="checkbox"]:disabled+label {
-  opacity: 0.5;
+  opacity: 0.3;
   cursor: not-allowed;
-  background: var(--filter-bg);
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: var(--border-color);
+}
+
+.filter-group input[type="checkbox"]:disabled+label:hover {
+  border-color: var(--border-color);
   color: var(--text-secondary);
 }
 
@@ -385,34 +441,43 @@ header {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 4rem 1rem;
-  color: var(--text-secondary);
-  font-size: 1rem;
+  padding: 6rem 1rem;
+  color: var(--text-color);
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: var(--line-height-relaxed);
+  text-align: center;
 }
 
 .proxy-warning {
   margin-top: 0.75rem;
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   color: var(--text-secondary);
+  line-height: var(--line-height-relaxed);
 }
 
 .android-warning {
-  margin-top: 1rem;
-  font-size: 0.85rem;
+  margin-top: 1.5rem;
+  font-size: 0.875rem;
   color: var(--text-secondary);
 }
 
 .android-warning a {
-  color: var(--text-color);
-  text-decoration: underline;
+  color: var(--accent-primary);
+  text-decoration: none;
   margin-left: 0.25rem;
+  transition: color 0.2s;
+}
+
+.android-warning a:hover {
+  color: var(--accent-hover);
 }
 
 /* 结果区域 */
 .results {
   padding: 2rem 1rem;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 2rem;
   max-width: 1400px;
   margin: 0 auto;
@@ -422,10 +487,10 @@ header {
 
 /* 页脚 */
 footer {
-  padding: 1.5rem 1.5rem calc(1.5rem + env(safe-area-inset-bottom, 0px));
+  padding: 3rem 1.5rem calc(3rem + env(safe-area-inset-bottom, 0px));
   background: var(--header-bg);
   color: var(--text-secondary);
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   border-top: 1px solid var(--border-color);
   margin-top: auto;
 }
@@ -439,33 +504,17 @@ footer {
 
 .copyright {
   color: var(--text-secondary);
+  font-weight: 400;
 }
 
 .copyright a {
   color: var(--text-color);
   text-decoration: none;
-  transition: opacity 0.2s;
+  transition: color 0.2s;
 }
 
 .copyright a:hover {
-  opacity: 0.7;
-}
-
-.github-link {
-  height: 32px;
-  padding: 0 12px;
-  border-radius: 6px;
-  background: var(--filter-bg);
-  color: var(--text-secondary);
-  text-decoration: none;
-  font-size: 0.85rem;
-  transition: background-color 0.2s;
-  display: flex;
-  align-items: center;
-}
-
-.github-link:hover {
-  background: var(--filter-hover);
+  color: var(--accent-primary);
 }
 
 /* 响应式布局 */
