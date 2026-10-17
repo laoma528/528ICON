@@ -1,20 +1,21 @@
+/* 结果卡片 - Apple store-utility-card 规范 */
 .result {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: var(--rounded-sm);
+  background: #ffffff;
+  border: 1px solid #d2d2d7;
+  border-radius: 18px;
   overflow: hidden;
   transition: border-color 0.15s ease-out, background-color 0.15s ease-out;
 }
 
 .result:hover {
-  border-color: var(--border-hover);
-  background-color: var(--filter-bg);
+  border-color: #aaaaaa;
+  background-color: #fafafc;
 }
 
 .icon-wrapper {
   position: relative;
   padding-top: 100%;
-  background: var(--filter-bg);
+  background: #f5f5f7;
   overflow: hidden;
 }
 
@@ -29,40 +30,48 @@
 }
 
 .info {
-  padding: 1.25rem;
+  padding: 1rem;
 }
 
+/* Apple body-strong: 17px / 600 */
 .icon-trackName {
+  font-family: system-ui, -apple-system, sans-serif;
   font-size: 1rem;
-  font-weight: 400;
-  margin-bottom: 0.5rem;
-  color: var(--text-color);
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: #1d1d1f;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.374px;
+  line-height: 1.24;
 }
 
+/* Apple caption: 14px / 400 */
 .icon-artistName {
   font-size: 0.875rem;
-  color: var(--text-secondary);
+  color: #6e6e73;
   margin-bottom: 0.5rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   font-weight: 400;
+  letter-spacing: -0.224px;
+  line-height: 1.43;
 }
 
+/* Apple configurator chip 标签 */
 .icon-platform {
   display: inline-block;
   font-size: 0.75rem;
-  color: var(--text-secondary);
-  background: transparent;
-  border: 1px solid var(--border-color);
-  padding: 4px 10px;
+  color: #6e6e73;
+  background: #f5f5f7;
+  border: 1px solid #d2d2d7;
+  padding: 3px 10px;
   border-radius: 9999px;
   font-weight: 400;
-  letter-spacing: 0.02em;
+  letter-spacing: -0.12px;
+  line-height: 1.43;
 }
 
 a.result {
@@ -81,8 +90,8 @@ a.result {
   align-items: center;
   justify-content: center;
   font-size: 3rem;
-  color: var(--text-secondary);
-  opacity: 0.4;
+  color: #6e6e73;
+  opacity: 0.3;
 }
 
 .icon-failed::after {
@@ -101,13 +110,13 @@ a.result {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent 0%, var(--filter-hover) 50%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.04) 50%, transparent 100%);
   animation: shimmer 1.5s infinite;
 }
 
 .skeleton-line {
-  background: var(--filter-bg);
-  border-radius: 4px;
+  background: #f0f0f0;
+  border-radius: 5px;
   overflow: hidden;
   position: relative;
 }
@@ -119,33 +128,28 @@ a.result {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent 0%, var(--filter-hover) 50%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.04) 50%, transparent 100%);
   animation: shimmer 1.5s infinite;
 }
 
 .skeleton-title {
-  height: 1rem;
-  width: 75%;
-  margin-bottom: 0.5rem;
+  height: 0.875rem;
+  width: 72%;
+  margin-bottom: 0.375rem;
 }
 
 .skeleton-artist {
-  height: 0.85rem;
-  width: 55%;
+  height: 0.75rem;
+  width: 52%;
   margin-bottom: 0.5rem;
 }
 
 .skeleton-platform {
-  height: 0.75rem;
-  width: 40%;
+  height: 0.625rem;
+  width: 38%;
 }
 
 @keyframes shimmer {
-  0% {
-    transform: translateX(-100%);
-  }
-
-  100% {
-    transform: translateX(100%);
-  }
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
